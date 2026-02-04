@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row min-vh-100 align-items-center">
+            <div class="col-md-6 mx-auto">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <h2 class="card-title text-center mb-4">Task Management</h2>
+                        
+                        <div id="loginForm">
+                            <h4 class="mb-4">Sign In</h4>
+                            <form id="loginFormElement">
+                                <div class="mb-3">
+                                    <label for="loginUsername" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="loginUsername" placeholder="Enter username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="loginPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" required>
+                                </div>
+                                <div id="loginError" class="alert alert-danger d-none" role="alert"></div>
+                                <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                            </form>
+                            <hr>
+                            <p class="text-center text-muted">Don't have an account? <a href="#" onclick="toggleForm(event)">Sign Up</a></p>
+                        </div>
+
+                        <div id="registerForm" class="d-none">
+                            <h4 class="mb-4">Create Account</h4>
+                            <form id="registerFormElement">
+                                <div class="mb-3">
+                                    <label for="regUsername" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="regUsername" placeholder="Choose username (3-50 chars)" required minlength="3" maxlength="50">
+                                    <small class="text-muted">Alphanumeric and underscores only</small>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="regEmail" placeholder="Enter email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="regPassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="regPassword" placeholder="At least 8 characters" required minlength="8">
+                                </div>
+                                <div id="registerError" class="alert alert-danger d-none" role="alert"></div>
+                                <button type="submit" class="btn btn-success w-100">Create Account</button>
+                            </form>
+                            <hr>
+                            <p class="text-center text-muted">Already have an account? <a href="#" onclick="toggleForm(event)">Sign In</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>

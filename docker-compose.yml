@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: task_db
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: user
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - db_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: task_redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cache_network
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: task_api
+    environment:
+      ENVIRONMENT: development
+      DATABASE_URL: postgresql+asyncpg://postgres:user@postgres:5432/taskdb
+      REDIS_URL: redis://redis:6379
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: taskdb
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      JWT_SECRET_KEY: 7c5598112ea15080a62fa0c881984330931fbe91a813d598e20f004e83471e7b
+      JWT_ALGORITHM: HS256
+      JWT_ACCESS_TOKEN_EXPIRE_MINUTES: 60
+      RATE_LIMIT_ENABLED: "true"
+      ALLOWED_ORIGINS: "*"
+    ports:
+      - "127.0.0.1:9500:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    networks:
+      - db_network
+      - cache_network
+      - frontend_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: task_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - frontend_network
+
+volumes:
+  postgres_data:
+
+networks:
+  db_network:
+    name: db_network
+    driver: bridge
+
+  cache_network:
+    name: cache_network
+    driver: bridge
+
+  frontend_network:
+    name: frontend_network
+    driver: bridge

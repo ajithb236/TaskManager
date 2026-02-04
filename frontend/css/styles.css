@@ -1,0 +1,189 @@
+/* Global Styles */
+:root {
+    --primary-color: #007bff;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+}
+
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.form-control, .form-select {
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Task Card Styles */
+.task-card {
+    transition: all 0.3s ease;
+    border-left: 4px solid #007bff;
+}
+
+.task-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.task-card.low-priority {
+    border-left-color: #28a745;
+}
+
+.task-card.medium-priority {
+    border-left-color: #ffc107;
+}
+
+.task-card.high-priority {
+    border-left-color: #dc3545;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.status-pending {
+    background-color: #e7f3ff;
+    color: #0066cc;
+    border: 1px solid #b3d9ff;
+}
+
+.status-in_progress {
+    background-color: #fff3e0;
+    color: #cc6600;
+    border: 1px solid #ffe0b3;
+}
+
+.status-completed {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.priority-low {
+    background-color: #c8e6c9;
+    color: #1b5e20;
+}
+
+.priority-medium {
+    background-color: #ffe0b3;
+    color: #e65100;
+}
+
+.priority-high {
+    background-color: #ffcdd2;
+    color: #b71c1c;
+}
+
+/* Auth Page */
+.auth-container {
+    max-width: 450px;
+}
+
+.card-title {
+    color: #333;
+    font-weight: 600;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #555;
+}
+
+small.text-muted {
+    font-size: 12px;
+    display: block;
+    margin-top: 4px;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Alert Styles */
+.alert {
+    border-radius: 6px;
+    border: none;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* Loading and Empty States */
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+}
+
+.empty-state i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    color: #ddd;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+
+    .task-card {
+        padding: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
