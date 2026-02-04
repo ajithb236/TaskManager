@@ -9,7 +9,8 @@ class Environment(str, Enum):
     testing = "testing"
     production = "production"
 
-ENVIRONMENT = Environment(os.getenv("ENVIRONMENT", Environment.development))
+ENVIRONMENT = Environment(os.getenv("ENVIRONMENT", "development"))
+DEBUG = ENVIRONMENT == Environment.development
 
 POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")

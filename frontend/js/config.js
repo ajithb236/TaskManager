@@ -1,5 +1,7 @@
 // Configuration
-const API_URL = 'http://127.0.0.1:9500/api/v1';
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? window.location.origin.replace('3000', '') + 'api/v1'
+  : 'http://127.0.0.1:9500/api/v1';
 
 let authToken = null;
 let currentUser = null;
