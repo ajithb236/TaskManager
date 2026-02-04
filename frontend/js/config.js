@@ -43,13 +43,11 @@ async function apiCall(endpoint, method = 'GET', data = null) {
 
         if (!response.ok) {
             const errorData = await response.json();
-            console.error(`API Error on ${endpoint}:`, errorData);
             throw new Error(errorData.detail || `API Error: ${response.statusText}`);
         }
 
         return await response.json();
     } catch (error) {
-        console.error('API Error:', error);
         throw error;
     }
 }

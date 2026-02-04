@@ -1,9 +1,14 @@
 ﻿import logging
 import logging.config
 import json
+import warnings
 from datetime import datetime
 from pythonjsonlogger import jsonlogger
 from app.core.config import DEBUG, ENVIRONMENT
+
+# Suppress passlib/bcrypt compatibility warning
+warnings.filterwarnings("ignore", message=".*bcrypt version.*")
+logging.getLogger('passlib.handlers.bcrypt').setLevel(logging.ERROR)
 
 class CustomJsonFormatter(jsonlogger.JsonFormatter):
     def add_fields(self, log_record, record, message_dict):

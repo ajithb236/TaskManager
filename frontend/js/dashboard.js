@@ -9,9 +9,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function initDashboard() {
-    // Display username
+    // Display username and check if admin
     const currentUser = localStorage.getItem('currentUser');
+    const userRole = localStorage.getItem('userRole');
     document.getElementById('userDisplay').textContent = `Welcome, ${currentUser}!`;
+    
+    // Show admin link if user is admin
+    if (userRole === 'admin') {
+        document.getElementById('adminLink').style.display = 'inline-block';
+    }
 
     // Load tasks
     await loadTasks(0);
@@ -35,7 +41,6 @@ async function loadTasks(page = 0) {
         const tasks = await apiCall(`/tasks?skip=${skip}&limit=${ITEMS_PER_PAGE}`, 'GET');
         displayTasks(tasks);
     } catch (error) {
-        console.error('Failed to load tasks:', error);
         document.getElementById('tasksList').innerHTML = `
             <div class="col-12">
                 <div class="alert alert-danger">Failed to load tasks. Please try again.</div>

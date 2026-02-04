@@ -58,9 +58,16 @@ async function handleLogin() {
         // Store token and user info
         localStorage.setItem('token', data.access_token);
         localStorage.setItem('currentUser', username);
+        localStorage.setItem('userRole', data.user.role);
         
-        // Redirect to dashboard
-        window.location.href = 'dashboard.html';
+        // Redirect based on role
+        setTimeout(() => {
+            if (data.user.role === 'admin') {
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                window.location.href = 'dashboard.html';
+            }
+        }, 500);
     } catch (error) {
         errorDiv.textContent = error.message;
         errorDiv.classList.remove('d-none');
@@ -95,7 +102,6 @@ async function handleRegister() {
 
         if (!response.ok) {
             const error = await response.json();
-            console.error('Registration error:', error);
             let errorMsg = 'Registration failed';
             
             if (error.detail) {
@@ -111,7 +117,6 @@ async function handleRegister() {
         }
 
         // Show success and switch to login
-        alert('Account created successfully! Please login.');
         document.getElementById('registerForm').classList.add('d-none');
         document.getElementById('loginForm').classList.remove('d-none');
         document.getElementById('registerFormElement').reset();

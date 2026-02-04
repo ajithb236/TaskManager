@@ -154,13 +154,31 @@ async def delete_task(task_id: int, current_user: Dict[str, Any] = Depends(get_c
 @router.get("/admin/stats", tags=["admin"])
 async def get_admin_stats(admin_user: Dict[str, Any] = Depends(get_admin_user)) -> Dict[str, Any]:
     """Get statistics on all tasks and users. Admin only."""
+    cache_key = "admin:stats"
+    
+    # Try to get from cache first
+    cached_stats = await redis_client.get(cache_key)
+    if cached_stats:
+        cache_logger.info("cache_hit", extra={"key": cache_key})
+        stats_dict = json.loads(cached_stats)
+        stats_dict["cached"] = True
+        return stats_dict
+    
+    # If not cached, fetch from database
     total_tasks = await database.fetchval("SELECT COUNT(*) FROM tasks")
     total_users = await database.fetchval("SELECT COUNT(*) FROM users")
     completed_tasks = await database.fetchval("SELECT COUNT(*) FROM tasks WHERE status = 'completed'")
     
-    return {
+    stats = {
         "total_users": total_users,
         "total_tasks": total_tasks,
         "completed_tasks": completed_tasks,
-        "admin_id": admin_user["id"]
+        "admin_id": admin_user["id"],
+        "cached": False
     }
+    
+    # Cache for 5 minutes (300 seconds)
+    await redis_client.set(cache_key, json.dumps(stats), expire=300)
+    cache_logger.info("cache_set", extra={"key": cache_key, "ttl": 300})
+    
+    return stats

@@ -4,6 +4,7 @@ from typing import Dict, Any, Optional
 from app.core.security import decode_access_token, is_token_blacklisted
 from app.core.redis import redis_client
 from app.core.config import CACHE_USER_TTL
+from app.core.logging import cache_logger
 from app.database.connection import database
 import json
 
@@ -41,6 +42,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     # Try to get user from cache first
     cached_user = await redis_client.get(f"user:{username}")
     if cached_user:
+        cache_logger.info("cache_hit", extra={"key": f"user:{username}"})
         return json.loads(cached_user)
     
     # If not in cache, fetch from database
