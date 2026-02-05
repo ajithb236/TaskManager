@@ -1,7 +1,7 @@
-// Configuration
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? window.location.origin.replace('3000', '') + 'api/v1'
-  : 'http://127.0.0.1:9500/api/v1';
+// Configuration - API URL
+// 1. Check window.API_URL (set by entrypoint script from env variable on Render)
+// 2. Fallback to localhost for development
+const API_URL = window.API_URL || 'http://127.0.0.1:9500/api/v1';
 
 let authToken = null;
 let currentUser = null;
