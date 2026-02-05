@@ -1,8 +1,9 @@
 # Task Management API
 
 FastAPI backend with JWT auth, role-based access, task CRUD, and vanilla HTML/JS frontend.
-Frontend  https://task-manager-v4wh.onrender.com
-API Docs : https://taskmanager-7eql.onrender.com/docs
+
+- Frontend  https://task-manager-v4wh.onrender.com
+- API Docs : https://taskmanager-7eql.onrender.com/docs
 ## Quick Start
 
 ```bash
